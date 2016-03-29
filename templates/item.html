@@ -32,12 +32,12 @@
 
 <div class="clm-samurai" data-abtest="true">
     <div data-abtest-group="A" data-abtest-group-percent="90">
-        <div data-module="suggestion" data-group="2" data-country="AR" data-item="{{ id }}" data-title="Other people are also looking for" data-quantity="10"></div>
-        <div data-module="suggestion" data-group="3" data-country="AR" data-item="{{ id }}" data-title="Check out these ads" data-quantity="10"></div>
-        <div data-module="suggestion" data-group="4" data-country="AR" data-item="{{ id }}" data-title="Try also" data-quantity="10"></div>
+        <div data-module="suggestion" data-group="2" data-country="AR" data-item="{{ id }}" data-title="Other people are also looking for" data-quantity="10" data-callback="customFunction"></div>
+        <div data-module="suggestion" data-group="3" data-country="AR" data-item="{{ id }}" data-title="Check out these ads" data-quantity="10" data-callback="customFunction"></div>
+        <div data-module="suggestion" data-group="4" data-country="AR" data-item="{{ id }}" data-title="Try also" data-quantity="10" data-callback="customFunction"></div>
     </div>
     <div data-abtest-group="B" data-abtest-group-percent="10">
-        <div data-module="suggestion" data-group="2" data-country="AR" data-item="{{ id }}" data-title="Other people are also looking for" data-quantity="10" data-noshow="true"></div>
+        <div data-module="suggestion" data-group="2" data-country="AR" data-item="{{ id }}" data-title="Other people are also looking for" data-quantity="10" data-callback="customFunction" data-noshow="true"></div>
     </div>
 </div>
 
@@ -47,5 +47,139 @@
     };
     var showPhoneFunction = function () {
         window.dataLayer.push({trackEvent: ['contact', 'show', 'phone']});
+    };
+
+    /* CLM custom HTMl function */
+    function customFunction (target, data) {
+        var index,
+            html = "",
+            element,
+            isMobile = false,
+            maxWidthLarge,
+            maxWidthSmall;
+
+        maxWidthLarge = Math.floor(target.offsetWidth * 0.45);
+        maxWidthSmall = Math.floor(maxWidthLarge * 0.9);
+
+        if (location.pathname && location.pathname.match(/\/i2\//g)) {
+            isMobile = true;
+        }
+
+        if (data.noshow) { return; } // For the control group on a/b test
+
+        if (!data.elements || data.elements.length === 0) { return; } // Empty results
+
+        html += "<div class=\"samurai-suggestions with-carousel\">";
+        if (isMobile) {
+            html += "<a href=\"#\" class=\"scrolling-button previous\" onClick=\"suggestionScroll(" + data.group + ", '" + data.random + "', 'left', " + (maxWidthLarge * 2) + "); return false;\"></a>";
+            html += "<a href=\"#\" class=\"scrolling-button next\" onClick=\"suggestionScroll(" + data.group + ", '" + data.random + "', 'right', " + (maxWidthLarge * 2) + "); return false;\"></a>";
+        } else {
+            html += "<a href=\"#\" class=\"scrolling-button previous\" onClick=\"suggestionScroll(" + data.group + ", '" + data.random + "', 'left', 260); return false;\"></a>";
+            html += "<a href=\"#\" class=\"scrolling-button next\" onClick=\"suggestionScroll(" + data.group + ", '" + data.random + "', 'right', 260); return false;\"></a>";
+        }
+
+        // Title
+        html += "<h2>" + data.title + "</h2>";
+
+        html += "<div class=\"samurai-related clm-carrusel-box clm-group-" + data.group + "-" + data.random + "\">";
+        if (isMobile) {
+            html += "<ul class=\"samurai-items\" style=\"width: " + ((maxWidthLarge + 5) * (data.elements.length)) + "px;\">";
+        } else {
+            html += "<ul class=\"samurai-items\" style=\"width: " + (192 * (data.elements.length)) + "px;\">";
+        }
+
+        for (index in data.elements) {
+            if (data.elements.hasOwnProperty(index)) {
+                element = data.elements[index];
+
+                if (isMobile) {
+                    html += "<li class=\"samurai-item mobile-small\" style=\"width:" + maxWidthSmall + "px;display:inline-block;margin-right:5px;box-sizing:border-box;\">";
+                } else {
+                    html += "<li class=\"samurai-item desktop-small\">";
+                }
+
+                // Image
+                html += "<a href=\"" + element.href + "\" onClick=\"suggestionManageLinks(this); return false;\" title=\"" + element.title + "\" class=\"samurai-image\" style=\"height: 125px;\">";
+                if (element.thumbnail) {
+                    html += "<img src=\"" + element.thumbnail + "\" alt=\"" + element.title + "\" title=\"" + element.title + "\" class=\"img-thumbnail\"/>";
+                } else {
+                    html += "";
+                }
+                html += "</a>";
+
+                // Title
+                html += "<a href=\"" + element.href + "\" onClick=\"suggestionManageLinks(this); return false;\" title=\"" + element.title + "\">";
+                html += "<span class=\"title\">" + element.title + "</span>";
+                html += "</a>";
+
+                // Price
+                if (element.price) {
+                    html += "<a href=\"" + element.href + "\" onClick=\"suggestionManageLinks(this); return false;\" title=\"" + element.title + "\">";
+                    html += "<span class=\"price\">" + element.price + "</span>";
+                    html += "</a>";
+                }
+
+                html += "</li>";
+            }
+        }
+
+        html += "</ul>";
+        html += "</div>";
+        html += "<div style=\"clear:both\"></div>";
+        html += "</div>";
+
+        html += "<br class=\"clear\"/>";
+
+        target.innerHTML += "<div class=\"clm-suggestion-box-" + data.random + "\">" + html + "</div>";
+    }
+
+    window.suggestionScroll = function (group, random, side, percent) {
+        var from = 0,
+            position = group + "-" + random,
+            div = document.getElementsByClassName("clm-group-" + group + "-" + random),
+            piece = Math.floor(percent / 10);
+
+        window.sugestionDivScrollTimer = window.sugestionDivScrollTimer || [];
+        window.divScrollTimerRunning = window.divScrollTimerRunning || [];
+
+        if (undefined === window.divScrollTimerRunning[position] || !window.divScrollTimerRunning[position]) {
+            window.divScrollTimerRunning[position] = true;
+            window.sugestionDivScrollTimer[position] = setInterval(function () {
+                from = from + piece;
+                if (from > percent) {
+                    from = percent;
+                }
+                if (from < percent) {
+                    window.internalSuggestionScroll(div[0], side, piece);
+                } else {
+                    clearInterval(window.sugestionDivScrollTimer[position]);
+                    window.divScrollTimerRunning[position] = false;
+                }
+            }, 20);
+        }
+    };
+
+    window.internalSuggestionScroll = function (div, side, percent) {
+        var xVect,
+            xTarget,
+            xTravel,
+            xAmount;
+
+        xAmount = (div.scrollWidth > div.offsetWidth)
+            ? 17
+            : 0;
+        xTravel = div.scrollWidth + xAmount - div.offsetWidth;
+
+        if (side === "right") {
+            xVect = 1;
+            xTarget = Math.min(div.scrollLeft + percent, xTravel);
+        } else {
+            xVect = -1;
+            xTarget = Math.max(0, div.scrollLeft - percent);
+        }
+
+        if (xTarget !== div.scrollLeft) {
+            div.scrollLeft += xVect * Math.max(1, Math.abs(div.scrollLeft - xTarget));
+        }
     };
 </script>
