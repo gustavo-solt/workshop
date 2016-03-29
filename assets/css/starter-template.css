@@ -10,3 +10,112 @@ body {
   min-width: 190px;
   min-height: 110px;
 }
+
+.clm-spinner {
+    display: block;
+    text-align: center;
+    background-color: rgba(0,0,0,0.5);
+    padding: 15px;
+    border-radius: 20px;
+    font-family: 'Roboto',Arial,Helvetica,sans-serif;
+    font-size: 17px;
+    color: white;
+    width: 130px;
+    z-index: 9999999;
+    margin: 15px auto 20px auto;
+}
+
+.clm-samurai {
+    background: #fff;
+    border: 1px solid #ededed;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.clm-samurai br.clear {
+    height: 5px;
+    display: block;
+}
+.clm-samurai h2 {
+    border-radius: 5px 5px 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 18px 13px 10px 13px;
+}
+.samurai-items {
+    padding: 0;
+    list-style-type: none;
+    display: block;
+}
+.samurai-items:after {
+    content: " ";
+    clear: both;
+    display: block;
+}
+.samurai-items .samurai-item {
+    float: left;
+    height: 200px;
+    padding: 1%;
+    position: relative;
+    width: 18%;
+    margin: 0.55%;
+}
+.samurai-items .samurai-item:last-child {
+    margin: 0;
+}
+.samurai-items .samurai-item:hover {
+    background: #eee;
+}
+.samurai-items .samurai-item h3 {
+    font-weight: normal;
+    margin: 0
+}
+.samurai-items .samurai-item a {
+    display: block;
+}
+.samurai-items .samurai-item a:hover {
+    text-decoration: none
+}
+.samurai-items .samurai-item p, .samurai-items .samurai-item .samurai-image {
+    display: block;
+    margin: 0;
+    vertical-align: top
+}
+.samurai-items .samurai-item .samurai-image {
+    border: 1px solid #ccc;
+    height: 90px;
+    position: relative;
+    background: #fff;
+}
+.samurai-items .samurai-item .samurai-image img {
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    right: 0;
+    top: 0
+}
+.samurai-items .samurai-item .title {
+    color:#2965be;
+    display: inline-block;
+    font-size: 14px;
+    height: 36px;
+    line-height: 1.25;
+    margin: 10px 0 0;
+    overflow: hidden;
+}
+.samurai-items .samurai-item .title span {
+    color: #999;
+    font-size: .857142857142857rem
+}
+.samurai-items .samurai-item .price {
+    color: #000;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    height: 20px;
+}
+.samurai-items .samurai-item .price span {
+    font-size: .857142857142857rem
+}
