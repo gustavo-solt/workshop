@@ -30,7 +30,15 @@
     {% endif %}
 </div>
 
-<div class="clm-samurai" data-module="suggestion" data-group="3" data-item="{{ id }}" data-title="Check out these ads" data-quantity="10" data-country="AR"></div>
+<div class="clm-samurai" data-abtest="true">
+    <div data-abtest-group="A" data-abtest-group-percent="90">
+        <div data-module="suggestion" data-group="2" data-country="AR" data-item="{{ id }}" data-title="Other people are also looking for" data-quantity="10"></div>
+        <div data-module="suggestion" data-group="3" data-country="AR" data-item="{{ id }}" data-title="Check out these ads" data-quantity="10"></div>
+    </div>
+    <div data-abtest-group="B" data-abtest-group-percent="10">
+        <div data-module="suggestion" data-group="2" data-country="AR" data-item="{{ id }}" data-title="Other people are also looking for" data-quantity="10" data-noshow="true"></div>
+    </div>
+</div>
 
 <script>
     var callFunction = function () {
