@@ -1,0 +1,17 @@
+<div id="itemDiv">
+    <div class="media">
+        <div class="media-left media-top">
+            <a href="index{{ isWap ? 'ForWap' : '' }}.php?page=item&itemId={{ id }}">
+                <img class="media-object img-thumbnail" src="{{ imgSource }}" alt="{{ title }}">
+            </a>
+        </div>
+        <div class="media-body">
+            <a href="index{{ isWap ? 'ForWap' : '' }}.php?page=item&itemId={{ id }}">
+                <h4 class="media-heading">{{ title }}</h4>
+            </a>
+        </div>
+    </div>
+
+    <p>Call the user</p>
+    <p><b>{{ phone }}</b></p>
+</div>

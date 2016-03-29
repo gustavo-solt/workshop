@@ -1,0 +1,25 @@
+<div id="listingDiv">
+    {% for item in listingData %}
+    <div class="media">
+        <div class="media-left media-top">
+            <a href="index{{ isWap ? 'ForWap' : '' }}.php?page=item&itemId={{ item.id }}">
+                <img class="media-object img-thumbnail" src="{{ item.imgSource|default('') }}" alt="{{ item.title }}">
+            </a>
+        </div>
+        <div class="media-body">
+            <a href="index{{ isWap ? 'ForWap' : '' }}.php?page=item&itemId={{ item.id }}">
+                <h4 class="media-heading">{{ item.title }}</h4>
+            </a>
+            <p>{{ item.description }}</p>
+        </div>
+        <div class="media-right">
+            <p>{{ item.price|default('') }}</p>
+        </div>
+    </div>
+    {% else %}
+    <p>No Results</p>
+    {% endfor %}
+</div>
+
+
+

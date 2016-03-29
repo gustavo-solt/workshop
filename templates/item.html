@@ -1,0 +1,31 @@
+<div id="itemDiv">
+    <div class="media">
+        <div class="media-left media-top">
+            <img class="media-object img-thumbnail" src="{{ imgSource }}" alt="{{ title }}">
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading">{{ title }}</h4>
+            <p>{{ description }}</p>
+        </div>
+        <div class="media-right">
+            <p>{{ price }}</p>
+        </div>
+    </div>
+
+    {% if not isWap %}
+    <button type="button" class="btn btn-danger">Call</button>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Show phone
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="#">{{ phone }}</a></li>
+        </ul>
+    </div>
+    {% else %}
+    <a href="indexForWap.php?page=phone&itemId={{ id }}">
+        <button type="button" class="btn btn-danger" id="callButton">Call</button>
+    </a>
+    {% endif %}
+</div>
