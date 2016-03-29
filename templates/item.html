@@ -13,9 +13,9 @@
     </div>
 
     {% if not isWap %}
-    <button type="button" class="btn btn-danger">Call</button>
+    <button type="button" class="btn btn-danger" onclick="callFunction()">Call</button>
     <div class="btn-group" role="group">
-        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="showPhoneFunction()">
             Show phone
             <span class="caret"></span>
         </button>
@@ -29,3 +29,12 @@
     </a>
     {% endif %}
 </div>
+
+<script>
+    var callFunction = function () {
+        window.dataLayer.push({trackEvent: ['contact', 'reply', 'call']});
+    };
+    var showPhoneFunction = function () {
+        window.dataLayer.push({trackEvent: ['contact', 'show', 'phone']});
+    };
+</script>

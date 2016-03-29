@@ -19,9 +19,41 @@
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="assets/js/bootstrap.min.js"></script>
+
+    <!-- Ninja implementation for script -->
+    <script type="text/javascript">
+        <!--
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({"cleanup": function () {
+            window.dataLayer.push({{ ninja.js|json_encode()|raw }});
+        }});
+        var ninjaTag = document.getElementById("ninja-script-tag");
+        if (!ninjaTag) {
+            (function () {
+                "use strict";
+                window.configTracking = {{ ninja.config|json_encode()|raw }};
+                var script = document.createElement("script");
+                script.type = "text/javascript";
+                script.id = "ninja-script-tag";
+                script.async = true;
+                script.src = "https://ninja.onap.io/ninja.js";
+                (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(script);
+            }());
+        }
+        //-->
+    </script>
     {% endif %}
 </head>
 <body>
+
+    <!-- Ninja implementation for noscript and WAP-->
+    {% if not isWap %}
+    <noscript>
+        <img src="{{ ninja.ns|raw }}" class="tracking" width="1" height="1">
+    </noscript>
+    {% else %}
+    <img src="{{ ninja.nsForWap|raw }}" class="tracking" width="1" height="1">
+    {% endif %}
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">

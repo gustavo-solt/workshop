@@ -17,5 +17,7 @@ if (in_array($page, ['home', 'help', 'search', 'item', 'phone'])) {
     include('home.php');
 }
 
+include('ninja.php');
+
 // Render
 echo $twig->render('index.html', $templateValues);
