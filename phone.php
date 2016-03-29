@@ -15,3 +15,8 @@ if ($itemContent) {
 }
 
 $templateValues['mainTemplate'] = 'phone.html';
+
+// Ninja vars
+$ninjaVars['trackPage'] = 'tapCall';
+$ninjaVars['itemId'] = $itemId;
+$ninjaVars['imagesCount'] = isset($itemData['images']) ? count($itemData['images']) : 0;

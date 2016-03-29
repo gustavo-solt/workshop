@@ -17,3 +17,8 @@ if ($listingContent) {
     }
 }
 $templateValues['mainTemplate'] = 'search.html';
+
+// Ninja vars
+$ninjaVars['trackPage'] = 'resultSet';
+$ninjaVars['resultSetType'] = 'search';
+$ninjaVars['searchString'] = $searchString;

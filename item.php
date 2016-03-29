@@ -15,3 +15,8 @@ if ($itemContent) {
 }
 
 $templateValues['mainTemplate'] = 'item.html';
+
+// Ninja vars
+$ninjaVars['trackPage'] = 'item';
+$ninjaVars['itemId'] = $itemId;
+$ninjaVars['imagesCount'] = isset($itemData['images']) ? count($itemData['images']) : 0;
